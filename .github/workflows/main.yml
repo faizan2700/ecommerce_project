@@ -29,4 +29,5 @@ jobs:
 
     - name: Run tests
       run: |
-        python3 ecommerce/manage.py test 
+        cd ecommerce 
+        python3 manage.py test 
