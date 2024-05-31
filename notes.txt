@@ -1,0 +1,3 @@
+1. how to handle microservices database per service with foreign keys?
+2. why are there so many options in model view set class ? 
+3. how to package utils in django project. 
