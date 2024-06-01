@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path 
-import os 
+import os  
+import dj_database_url 
 from dotenv import load_dotenv 
 load_dotenv() 
 
@@ -81,14 +82,29 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test_db', 
-        'USER': 'postgres', 
-        'PASSWORD': 'admin', 
-        'HOST': 'localhost', 
-        'PORT': '5432', 
+        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+        
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+
+# Celery configuration (if using Celery)
+CELERY_BROKER_URL = os.getenv('REDIS_URL')
+CELERY_RESULT_BACKEND = os.getenv('REDIS_URL')  
+
+CELERY_ACCEPT_CONTENT = ['application/json'] 
+CELERY_RESULT_SERIALIZER = 'json' 
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Kolkata' 
 
 
 # Password validation
