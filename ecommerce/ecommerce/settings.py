@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path 
-import os  
-import dj_database_url 
-from dotenv import load_dotenv 
-load_dotenv() 
+# import os  
+# import dj_database_url 
+# from dotenv import load_dotenv 
+# load_dotenv() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY') 
+SECRET_KEY = "secret key"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG') 
+DEBUG = True 
 
 ALLOWED_HOSTS = []
 
@@ -44,13 +44,13 @@ INSTALLED_APPS = [
 
     'rest_framework', 
     'authenticationservice', 
-    'adminservice', 
-    'cartservice', 
-    'notificationservice', 
-    'orderservice', 
-    'paymentservice', 
-    'productservice', 
-    'userprofileservice', 
+    # 'adminservice', 
+    # 'cartservice', 
+    # 'notificationservice', 
+    # 'orderservice', 
+    # 'paymentservice', 
+    # 'productservice', 
+    # 'userprofileservice', 
 ]
 
 MIDDLEWARE = [
@@ -89,8 +89,12 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
-        
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': 'test_db', 
+        'USER': 'postgres', 
+        'PASSWORD': 'admin', 
+        'HOST': 'localhost', 
+        'PORT': '5432',  
     }
 }
 
