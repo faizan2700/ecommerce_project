@@ -43,7 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', 
 
     'rest_framework', 
-    'authenticationservice',
+    'authenticationservice', 
+    'adminservice', 
+    'cartservice', 
+    'notificationservice', 
+    'orderservice', 
+    'paymentservice', 
+    'productservice', 
+    'userprofileservice', 
 ]
 
 MIDDLEWARE = [
