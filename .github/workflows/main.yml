@@ -1,33 +1,32 @@
-name: Django CI
+name: Continuous Integration
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   test:
+
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Check out repository code
       uses: actions/checkout@v2
 
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.10'
+        python-version: '3.10.11'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run migrations
-      run: |
-        python ecommerce/manage.py migrate
-
     - name: Run tests
       run: |
-        python ecommerce/manage.py test
+        python3 ecommerce/manage.py test 
