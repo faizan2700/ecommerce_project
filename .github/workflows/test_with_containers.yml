@@ -1,0 +1,62 @@
+name: Django CI with Containers
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: admin
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Download wait-for-it.sh
+      run: curl -o wait-for-it.sh https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh
+
+    - name: Make wait-for-it.sh executable
+      run: chmod +x wait-for-it.sh
+
+    - name: Wait for PostgreSQL
+      run: ./wait-for-it.sh localhost:5432 --timeout=60 --strict -- echo "PostgreSQL is up"
+
+    - name: Run migrations
+      env:
+        DATABASE_URL: postgres://postgres:admin@localhost:5432/test_db
+      run: python ecommerce/manage.py migrate
+
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:admin@localhost:5432/test_db
+        REDIS_URL: redis://localhost:6379/0
+        CELERY_BROKER_URL: redis://localhost:6379/0
+        CELERY_RESULT_BACKEND: redis://localhost:6379/0
+      run: python ecommerce/manage.py test authenticationservice 

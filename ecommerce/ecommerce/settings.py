@@ -44,13 +44,13 @@ INSTALLED_APPS = [
 
     'rest_framework', 
     'authenticationservice', 
-    # 'adminservice', 
-    # 'cartservice', 
-    # 'notificationservice', 
-    # 'orderservice', 
-    # 'paymentservice', 
-    # 'productservice', 
-    # 'userprofileservice', 
+    'adminservice', 
+    'cartservice', 
+    'notificationservice', 
+    'orderservice', 
+    'paymentservice', 
+    'productservice', 
+    'userprofileservice', 
 ]
 
 MIDDLEWARE = [
