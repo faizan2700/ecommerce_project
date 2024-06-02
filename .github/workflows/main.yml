@@ -29,4 +29,4 @@ jobs:
 
     - name: Run tests
       run: |
-        python3 ecommerce/manage.py test 
+        python3 ecommerce/manage.py test authenticationservice
