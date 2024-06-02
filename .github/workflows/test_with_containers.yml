@@ -59,4 +59,12 @@ jobs:
         REDIS_URL: redis://localhost:6379/0
         CELERY_BROKER_URL: redis://localhost:6379/0
         CELERY_RESULT_BACKEND: redis://localhost:6379/0
-      run: python ecommerce/manage.py test authenticationservice 
+      run: |
+        python3 ecommerce/manage.py test authenticationservice 
+        python3 ecommerce/manage.py test adminservice 
+        python3 ecommerce/manage.py test cartservice 
+        python3 ecommerce/manage.py test notificationservice 
+        python3 ecommerce/manage.py test paymentservice 
+        python3 ecommerce/manage.py test userprofileservice  
+        python3 ecommerce/manage.py test productservice 
+        python3 ecommerce/manage.py test orderservice 

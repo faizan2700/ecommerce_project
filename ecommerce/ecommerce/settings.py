@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path 
-# import os  
-# import dj_database_url 
-# from dotenv import load_dotenv 
-# load_dotenv() 
+import os  
+import dj_database_url 
+from dotenv import load_dotenv 
+load_dotenv() 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "secret key"
+SECRET_KEY = os.getenv("SECRET_KEY") 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = os.getenv("DEBUG") 
 
 ALLOWED_HOSTS = []
 
@@ -89,12 +89,13 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql', 
-#         'NAME': 'test_db', 
-#         'USER': 'postgres', 
-#         'PASSWORD': 'admin', 
-#         'HOST': 'localhost', 
-#         'PORT': '5432',  
+#         # 'ENGINE': 'django.db.backends.postgresql', 
+#         # 'NAME': 'test_db', 
+#         # 'USER': 'postgres', 
+#         # 'PASSWORD': 'admin', 
+#         # 'HOST': 'localhost', 
+#         # 'PORT': '5432',  
+#         'default': dj_database_url.config(default=os.getenv('DATABASE_URL')), 
 #     }
 # }
 DATABASES = {
@@ -108,7 +109,7 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://redis:6379/0',
+        'LOCATION': os.getenv("REDIS_URL"),
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
@@ -116,8 +117,8 @@ CACHES = {
 }
 
 # Celery configuration (if using Celery)
-CELERY_BROKER_URL = 'redis://redis:6379/0'
-CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_BROKER_URL = os.getenv("REDIS_URL") 
+CELERY_RESULT_BACKEND = os.getenv("REDIS_BACKEND") 
 
 CELERY_ACCEPT_CONTENT = ['application/json'] 
 CELERY_RESULT_SERIALIZER = 'json' 
